@@ -85,6 +85,62 @@ class Field {
             end = this.testWinLoss();
         }
     }
+
+    generateField(height, width){
+        let newRow = [];
+        let newField = [];
+
+        for (let y = 0; y < height; y++){
+            for (let x = 0; x < width; x++){
+                newRow.push('░')
+            }
+            newField.push(newRow);
+            newRow = [];
+        }
+
+        newField[0][0] = '*';
+        let holeCount = Math.floor(height * width / 3);
+        let z = 0;
+
+        while (z < holeCount){
+            let tryX = Math.floor(Math.random() * width)
+            let tryY = Math.floor(Math.random() * height);
+            if (newField[tryY][tryX] === '░'){
+                newField[tryY][tryX] = 'O';
+                z++;
+            }
+        }
+
+        let tryX = 0;
+        let tryY = 0;
+
+        while (newField[tryY][tryX] != '^'){
+            tryX = Math.floor(Math.random() * width)
+            tryY = Math.floor(Math.random() * height);
+            if (newField[tryY][tryX] === '░'){
+                newField[tryY][tryX] = '^';
+            }
+        }
+
+        return newField;
+    }
+
+    promptFieldSize(){
+        let height;
+        let width;
+        while (!Number.isInteger(height)){
+            height = prompt('How tall should the field be? ');
+            height = parseInt(height, 10);
+        }
+
+        while (!Number.isInteger(width)){
+            width = prompt('How wide should the field be? ');
+            width = parseInt(width, 10);
+        }
+
+        this._field = this.generateField(height,width);
+        
+    }
 }
 
 const myField = new Field([
@@ -92,5 +148,7 @@ const myField = new Field([
     ['░', 'O', '░'],
     ['░', '^', '░'],
   ]);
+
+  myField.promptFieldSize();
 
   myField.playGame();
