@@ -98,8 +98,14 @@ class Field {
             newRow = [];
         }
 
-        newField[0][0] = '*';
-        let holeCount = Math.floor(height * width / 3);
+        let randomYStart = Math.floor(Math.random() * height);
+        let randomXStart = Math.floor(Math.random() * width);
+
+        this._playerX = randomXStart;
+        this._playerY = randomYStart;
+
+        newField[randomYStart][randomXStart] = '*';
+        let holeCount = Math.floor(height * width / 3.5);
         let z = 0;
 
         while (z < holeCount){
